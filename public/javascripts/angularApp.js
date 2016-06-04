@@ -147,11 +147,20 @@ function($scope, posts, auth){
       title: $scope.title,
       link: $scope.link,
       body: $scope.body,
+      isPost: true,
     });
     $scope.title = '';
     $scope.link = '';
     $scope.body = '';
   };
+
+  $scope.delete = function ( idx ) {
+  var post_to_delete = $scope.posts[idx];
+
+  API.DeletePerson({ id: person_to_delete.id }, function (success) {
+    $scope.posts.splice(idx, 1);
+  });
+};
 
 
 }])
