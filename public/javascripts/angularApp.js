@@ -74,6 +74,9 @@ function($stateProvider, $urlRouterProvider) {
     });
   };
 
+  o.remove = function(postId) {
+    return $http.delete('/posts/' + postId);
+  };
 
   o.addComment = function(id, comment) {
     return $http.post('/posts/' + id + '/comments', comment, {
