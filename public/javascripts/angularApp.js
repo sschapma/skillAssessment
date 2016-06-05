@@ -154,14 +154,6 @@ function($scope, posts, auth){
     $scope.body = '';
   };
 
-  $scope.delete = function ( idx ) {
-  var post_to_delete = $scope.posts[idx];
-
-  API.DeletePerson({ id: person_to_delete.id }, function (success) {
-    $scope.posts.splice(idx, 1);
-  });
-};
-
 
 }])
 .controller('PostsCtrl', [

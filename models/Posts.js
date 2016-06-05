@@ -11,10 +11,6 @@ var PostSchema = new mongoose.Schema({
   author: String
 });
 
-PostSchema.pre('save', function(next){
-  now = new Date();
-  this.updated_at = now;
-  next();
-});
+
 
 mongoose.model('Post', PostSchema);

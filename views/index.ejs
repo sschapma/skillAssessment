@@ -1,171 +1,380 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html>
 <head>
-  <title>Flapper News</title>
-
-
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Sam's Forum</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-
   <script src="/javascripts/angularApp.js"></script>
 
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect.
+  -->
+  <link rel="stylesheet" href="/dist/css/skins/skin-blue.min.css">
 
+
+
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 </head>
-<body ng-app="flapperNews">
-  <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
-    <ul class="nav navbar-nav">
-      <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
-      <li ng-show="isLoggedIn()"><a ng-click="logOut()">Log Out</a></li>
-      <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-      <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
-      <li></li>
-    </ul>
-  </nav>
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <ui-view></ui-view>
-    </div>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body ng-app="flapperNews" class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="#" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>S</b>AM</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>Sam's</b>Forum</span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation" ng-controller="NavCtrl">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+
+            <ul class="nav navbar-nav">
+              <li ng-show="isLoggedIn()" class="text-capitalize"><a>Welcome, <strong>{{ currentUser() }}</strong>!</a></li>
+              <li ng-show="isLoggedIn()"><a ng-click="logOut()">Log Out</a></li>
+              <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+              <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+              <li></li>
+            </ul>
+
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu">
+        <li class="header">LINKS</li>
+        <!-- Optionally, you can add icons to the links -->
+        <li class="active"><a href="#/home"><i class="fa fa-link"></i> <span>Home</span></a></li>
+        <li><a href="http://askajumma.com"><i class="fa fa-link"></i> <span>Ask Ajumma</span></a></li>
+        <li><a href="http://sschapman.com"><i class="fa fa-link"></i> <span>Sam's Portfolio</span></a></li>
+        <li><a href="http://github.com/sschapma"><i class="fa fa-link"></i> <span>Sam's Github</span></a></li>
+        <li><a href="http://linkedin.com/sschapma"><i class="fa fa-link"></i> <span>Sam's LinkedIn</span></a></li>
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1 style="font-size:1.5em;">
+        Sam's Forum
+        <small>Built as a skill assessment for Ask Ajumma.</small>
+      </h1><hr>
+    </section>
+
+    <!-- Main content -->
+    <section class="content" style="margin-top:-40px;">
+      <div class="row">
+        <div class="col-sm-10">
+          <ui-view></ui-view>
+        </div>
+      </div>
+      <!-- Your Page Content Here -->
+
+    </section>
+    <!-- /.content -->
   </div>
+  <!-- /.content-wrapper -->
 
-  <script type="text/ng-template" id="/home.html">
-    <div class="page-header">
-      <h1>Flapper News</h1>
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Bringing your ideas to life!
     </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2016 <a href="http://sschapman.com/">Sam Chapman</a>.</strong> All rights reserved.
+  </footer>
 
-    <div ng-repeat="post in posts | orderBy:'isPost' : reverse">
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane active" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript::;">
+              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-      <span style="font-size:20px; margin-left:10px;">
-        <div ng-show="post.isPost">
-          <a href="#/posts/{{post._id}}">{{post.title}}</a>
-      </span>
-      <span ng-show="post.author">
-        posted by {{post.author}}
-      </span>
-      </div> 
-    </div>
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
 
-    <form ng-submit="addPost()"
-      style="margin-top:30px;" ng-show="isLoggedIn()">
-      <h3>Add a new post</h3>
+                <p>Will be 23 on April 24th</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
 
-      <div class="form-group">
-        <input type="text"
-        class="form-control"
-        placeholder="Title"
-        ng-model="title"></input>
+        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript::;">
+              <h4 class="control-sidebar-subheading">
+                Custom Template Design
+                <span class="label label-danger pull-right">70%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
       </div>
-      <div class="form-group">
-        <input type="text"
-        class="form-control"
-        placeholder="Body"
-        ng-model="body"></input>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Report panel usage
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+
+            <p>
+              Some information about this general settings option
+            </p>
+          </div>
+          <!-- /.form-group -->
+        </form>
       </div>
-      <button type="submit" class="btn btn-primary">Post</button>
-    </form>
-
-    <div ng-hide="isLoggedIn()">
-      <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
+      <!-- /.tab-pane -->
     </div>
-  </script>
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
 
-  <script type="text/ng-template" id="/posts.html">
-    <div class="page-header">
-      <h3>
-        <span ng-show="post.title">
-          {{post.title}}
-        </span>
-        <span ng-show="post.author" style="font-size:10px; float:right;">
-          posted by {{post.author}} at {{post.created_at}}
-        </span>
-      </h3>
-    </div>
+<!-- REQUIRED JS SCRIPTS -->
 
-    <div class="page-header">
-        <span ng-show="post.body">
-          {{post.body}}
-        </span>
-    </div>
+<!-- jQuery 2.2.0 -->
+<script src="plugins/jQuery/jQuery-2.2.0.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/app.min.js"></script>
 
-    <div ng-repeat="comment in post.comments">
-      <span style="font-size:20px; margin-left:10px;">
-        {{comment.body}} - by {{comment.author}}
-      </span>
-    </div>
-    <form ng-submit="addComment()"
-      style="margin-top:30px;" ng-show="isLoggedIn()">
-      <h3>Add a new comment</h3>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. Slimscroll is required when using the
+     fixed layout. -->
+     <script type="text/ng-template" id="/home.html">
+       <div ng-repeat="post in posts">
+         <span style="font-size:20px;">
+           <div ng-show="post.isPost" style="margin-bottom:5px; padding: 10px 10px; border:1px solid gray; border-radius:2px; background-color:#FEFEFE;">
+             <a href="#/posts/{{post._id}}"><strong>{{post.title}}</strong></a>
+         </span>
+         <span ng-show="post.author" style="float:right;">
+           <h6>posted by <span class="text-capitalize">{{post.author}}<span></h6>
+         </span>
+         </div>
+       </div>
 
-      <div class="form-group">
-        <input type="text"
-        class="form-control"
-        placeholder="Comment"
-        ng-model="body"></input>
-      </div>
-      <button type="submit" class="btn btn-primary">Post</button>
-    </form>
+       <form ng-submit="addPost()"
+         style="margin-top:30px;" ng-show="isLoggedIn()">
+         <h3>Add a new post</h3>
 
-    <div ng-hide="isLoggedIn()">
-      <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can comment.</h3>
-    </div>
-  </script>
+         <div class="form-group">
+           <input type="text"
+           class="form-control"
+           placeholder="Title"
+           ng-model="title"></input>
+         </div>
+         <div class="form-group">
+           <textarea type="text"
+           class="form-control"
+           ng-model="body"
+           placeholder="Body"></textarea>
+         </div>
+         <button type="submit" class="btn btn-primary">Post</button>
+       </form>
 
-  <script type="text/ng-template" id="/login.html">
-    <div class="page-header">
-      <h1>Flapper News</h1>
-    </div>
+       <div ng-hide="isLoggedIn()">
+         <h4>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h4>
+       </div>
+     </script>
 
-    <div ng-show="error" class="alert alert-danger row">
-      <span>{{ error.message }}</span>
-    </div>
+     <script type="text/ng-template" id="/posts.html">
+       <div>
+         <h1>
+           <span ng-show="post.title">
+             <strong>{{post.title}}</strong>
+           </span>
+         </h1>
+       </div>
 
-    <form ng-submit="logIn()"
-      style="margin-top:30px;">
-      <h3>Log In</h3>
+       <div class="page-header">
+           <span ng-show="post.body">
+             <i>{{post.body}}</i>
+           </span>
+           <span ng-show="post.author" style="font-size:10px; float:right;">
+             posted by <span class="text-capitalize">{{post.author}}</span>
+       </div>
 
-      <div class="form-group">
-        <input type="text"
-        class="form-control"
-        placeholder="Username"
-        ng-model="user.username"></input>
-      </div>
-      <div class="form-group">
-        <input type="password"
-        class="form-control"
-        placeholder="Password"
-        ng-model="user.password"></input>
-      </div>
-      <button type="submit" class="btn btn-primary">Log In</button>
-    </form>
-  </script>
+       <div ng-repeat="comment in post.comments" style="border:1px solid gray; border-radius:5px; background-color: white; padding:0 5px 0 5px; margin-top:5px;">
+         <h4>
+           {{comment.body}}
+         </h4>
+         <span ng-show="comment.author" style="font-size:10px; float:right;">
+           posted by <span class="text-capitalize">{{comment.author}}</span>
+         </span><br>
+       </div>
+       <form ng-submit="addComment()"
+         style="margin-top:30px;" ng-show="isLoggedIn()">
+         <h3>Add a new comment</h3>
 
-  <script type="text/ng-template" id="/register.html">
-    <div class="page-header">
-      <h1>Flapper News</h1>
-    </div>
+         <div class="form-group">
+           <textarea
+           class="form-control"
+           placeholder="Comment"
+           ng-model="body"></textarea>
+         </div>
+         <button type="submit" class="btn btn-primary">Post</button>
+       </form>
 
-    <div ng-show="error" class="alert alert-danger row">
-      <span>{{ error.message }}</span>
-    </div>
+       <div ng-hide="isLoggedIn()">
+         <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can comment.</h3>
+       </div>
+     </script>
 
-    <form ng-submit="register()"
-      style="margin-top:30px;">
-      <h3>Register</h3>
+     <script type="text/ng-template" id="/login.html">
 
-      <div class="form-group">
-        <input type="text"
-        class="form-control"
-        placeholder="Username"
-        ng-model="user.username"></input>
-      </div>
-      <div class="form-group">
-        <input type="password"
-        class="form-control"
-        placeholder="Password"
-        ng-model="user.password"></input>
-      </div>
-      <button type="submit" class="btn btn-primary">Register</button>
-    </form>
-  </script>
+       <div ng-show="error" class="alert alert-danger row">
+         <span>{{ error.message }}</span>
+       </div>
+
+       <form ng-submit="logIn()"
+         style="margin-top:30px;">
+         <h3>Log In</h3>
+
+         <div class="form-group">
+           <input type="text"
+           class="form-control"
+           placeholder="Username"
+           ng-model="user.username"
+           style="width:30%;"></input>
+         </div>
+         <div class="form-group">
+           <input type="password"
+           class="form-control"
+           placeholder="Password"
+           ng-model="user.password"
+           style="width:30%;"></input>
+         </div>
+         <button type="submit" class="btn btn-primary">Log In</button>
+       </form>
+     </script>
+
+     <script type="text/ng-template" id="/register.html">
+
+       <div ng-show="error" class="alert alert-danger row">
+         <span>{{ error.message }}</span>
+       </div>
+
+       <form ng-submit="register()"
+         style="margin-top:30px;">
+         <h3>Register</h3>
+
+         <div class="form-group">
+           <input type="text"
+           class="form-control"
+           placeholder="Username"
+           ng-model="user.username"
+           style="width:30%;"></input>
+         </div>
+         <div class="form-group">
+           <input type="password"
+           class="form-control"
+           placeholder="Password"
+           ng-model="user.password"
+           style="width:30%;"></input>
+         </div>
+         <button type="submit" class="btn btn-primary">Register</button>
+       </form>
+     </script>
+
 </body>
 </html>
