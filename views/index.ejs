@@ -78,7 +78,7 @@
         <li><a href="http://askajumma.com"><i class="fa fa-link"></i> <span>Ask Ajumma</span></a></li>
         <li><a href="http://sschapman.com"><i class="fa fa-link"></i> <span>Sam's Portfolio</span></a></li>
         <li><a href="http://github.com/sschapma"><i class="fa fa-link"></i> <span>Sam's Github</span></a></li>
-        <li><a href="http://linkedin.com/sschapma"><i class="fa fa-link"></i> <span>Sam's LinkedIn</span></a></li>
+        <li><a href="http://linkedin.com/in/sschapma"><i class="fa fa-link"></i> <span>Sam's LinkedIn</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -98,7 +98,7 @@
     <!-- Main content -->
     <section class="content" style="margin-top:-40px;">
       <div class="row">
-        <div class="col-sm-10">
+        <div class="col-sm-11">
           <!-- Renders page templates here -->
           <ui-view></ui-view>
         </div>
@@ -131,13 +131,14 @@
 <script type="text/ng-template" id="/home.html">
  <!-- Loops through posts -->
  <div ng-repeat="post in posts">
-     <div ng-show="post.isPost" style="font-size:20px; margin-bottom:5px; padding: 10px 10px; border:1px solid gray; border-radius:2px; background-color:#FEFEFE;">
+     <div style="font-size:20px; margin-bottom:5px; padding: 10px 10px;
+     border:1px solid gray; border-radius:2px; background-color:#FEFEFE;">
        <!-- Displays title and links to comment page -->
        <a href="#/posts/{{post._id}}"><strong>{{post.title}}</strong></a>
         <!-- Displays author floated to the right -->
-        <span ng-show="post.author" class="pull-right">
-          <h6>posted by <span class="text-capitalize">{{post.author}}<span></h6>
-        </span>
+          <h6 ng-show="post.author" style="text-align:right;">
+            posted by <span class="text-capitalize">{{post.author}}<span>
+          </h6>
     </div>
  </div>
  <!-- Makes the add post form visible is user is logged in -->
@@ -179,10 +180,6 @@
 <!-- Post page / comments template -->
 <script type="text/ng-template" id="/posts.html">
    <div>
-     <!-- Displays author of post -->
-     <span ng-show="post.author" class="pull-right" style="margin:-20px 5px 0 0">
-       <h6>posted by <span class="text-capitalize">{{post.author}}</span></h6>
-     </span>
      <!-- Displays title of post -->
      <span ng-show="post.title">
        <h1><strong>{{post.title}}</strong></h1>
@@ -191,6 +188,10 @@
      <span ng-show="post.body">
        <h3><i>{{post.body}}</i></h3>
      </span>
+     <!-- Displays author of post -->
+     <div ng-show="post.author">
+       <h6>posted by <span class="text-capitalize">{{post.author}}</span></h6>
+     </div>
    </div>
 
    <!-- Loops through comments -->

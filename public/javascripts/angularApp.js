@@ -1,11 +1,10 @@
-
 angular.module('flapperNews', ['ui.router'])
 .config([
 '$stateProvider',
 '$urlRouterProvider',
 function($stateProvider, $urlRouterProvider) {
-
   $stateProvider
+    //routes to home page
     .state('home', {
       url: '/home',
       templateUrl: '/home.html',
@@ -16,6 +15,7 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }
     })
+    //routes to post / comments page
     .state('posts', {
       url: '/posts/{id}',
       templateUrl: '/posts.html',
@@ -26,6 +26,7 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }
     })
+    //routes to login page
     .state('login', {
       url: '/login',
       templateUrl: '/login.html',
@@ -36,6 +37,7 @@ function($stateProvider, $urlRouterProvider) {
         }
       }]
     })
+    //routes to register page
     .state('register', {
       url: '/register',
       templateUrl: '/register.html',
@@ -46,26 +48,26 @@ function($stateProvider, $urlRouterProvider) {
         }
       }]
     });
-
+  //routes to home page if another page isn't provided
   $urlRouterProvider.otherwise('home');
 }])
 .factory('posts', ['$http', 'auth', function($http, auth){
   var o = {
     posts: []
   };
-
+  //gets a post by id
   o.get = function(id) {
     return $http.get('/posts/' + id).then(function(res){
       return res.data;
     });
   };
-
+  //gets all posts
   o.getAll = function() {
     return $http.get('/posts').success(function(data){
       angular.copy(data, o.posts);
     });
   };
-
+  //create new post
   o.create = function(post) {
     return $http.post('/posts', post, {
       headers: {Authorization: 'Bearer '+auth.getToken()}
@@ -73,26 +75,22 @@ function($stateProvider, $urlRouterProvider) {
       o.posts.push(data);
     });
   };
-
-  o.remove = function(postId) {
-    return $http.delete('/posts/' + postId);
-  };
-
+  //adds a comment
   o.addComment = function(id, comment) {
     return $http.post('/posts/' + id + '/comments', comment, {
       headers: {Authorization: 'Bearer '+auth.getToken()}
     });
   };
 
-
   return o;
 }])
+
 .factory('auth', ['$http', '$window', '$rootScope', function($http, $window, $rootScope){
    var auth = {
-    saveToken: function (token){
+    saveToken: function (token){ //saves token to local storage
       $window.localStorage['flapper-news-token'] = token;
     },
-    getToken: function (){
+    getToken: function (){ //gets token from local storage
       return $window.localStorage['flapper-news-token'];
     },
     isLoggedIn: function(){
@@ -131,31 +129,33 @@ function($stateProvider, $urlRouterProvider) {
 
   return auth;
 }])
+// controls posts
 .controller('MainCtrl', [
 '$scope',
 'posts',
 'auth',
 function($scope, posts, auth){
-  $scope.test = 'Hello world!';
-
   $scope.posts = posts.posts;
   $scope.isLoggedIn = auth.isLoggedIn;
 
   $scope.addPost = function(){
+    //prevents empty posts
     if(($scope.title === '') || ($scope.body === '')) { return; }
+    //creates post
     posts.create({
       title: $scope.title,
       link: $scope.link,
       body: $scope.body,
       isPost: true,
     });
+    //returns empty values after post is created
     $scope.title = '';
     $scope.link = '';
     $scope.body = '';
   };
 
-
 }])
+//controls comments
 .controller('PostsCtrl', [
 '$scope',
 'posts',
@@ -164,8 +164,9 @@ function($scope, posts, auth){
 function($scope, posts, post, auth){
   $scope.post = post;
   $scope.isLoggedIn = auth.isLoggedIn;
-
+  //adds comment to post
   $scope.addComment = function(){
+    // prevents empty comment
     if($scope.body === '') { return; }
     posts.addComment(post._id, {
       body: $scope.body,
@@ -173,17 +174,18 @@ function($scope, posts, post, auth){
     }).success(function(comment) {
       $scope.post.comments.push(comment);
     });
+    //returns empty value after posting comment
     $scope.body = '';
   };
 
 }])
+//controls registering and logging in
 .controller('AuthCtrl', [
 '$scope',
 '$state',
 'auth',
 function($scope, $state, auth){
   $scope.user = {};
-
   $scope.register = function(){
     auth.register($scope.user).error(function(error){
       $scope.error = error;
@@ -191,7 +193,6 @@ function($scope, $state, auth){
       $state.go('home');
     });
   };
-
   $scope.logIn = function(){
     auth.logIn($scope.user).error(function(error){
       $scope.error = error;
