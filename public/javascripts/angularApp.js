@@ -1,8 +1,3 @@
-function guest() {
-  $("#myBtn").prop("checked", true);
-  $("#myBtn2").prop("checked", true);
-};
-
 angular.module('flapperNews', ['ui.router'])
 .config([
 '$stateProvider',
@@ -124,11 +119,6 @@ function($stateProvider, $urlRouterProvider) {
     },
     logIn: function(user){
       console.log(user);
-      return $http.post('/login', user).success(function(data){
-        auth.saveToken(data.token);
-      });
-    },
-    guest: function(user){
       return $http.post('/login', user).success(function(data){
         auth.saveToken(data.token);
       });
