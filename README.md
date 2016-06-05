@@ -16,3 +16,5 @@
     npm start
 
 ####It's as simple as that!
+
+#####Note: This project is using a live database. To use a local db, open app.js, and read the notes on lines 10-12.
