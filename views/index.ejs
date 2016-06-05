@@ -131,7 +131,7 @@
 <script type="text/ng-template" id="/home.html">
  <!-- Loops through posts -->
  <div ng-repeat="post in posts">
-     <div style="font-size:20px; margin-bottom:5px; padding: 10px 10px;
+     <div style="font-size:20px; margin-bottom:5px; padding: 0px 10px;
      border:1px solid gray; border-radius:2px; background-color:#FEFEFE;">
        <!-- Displays title and links to comment page -->
        <a href="#/posts/{{post._id}}"><strong>{{post.title}}</strong></a>
@@ -243,6 +243,7 @@
      <!-- Username -->
      <div class="form-group">
        <input type="text"
+       id="trial"
        class="form-control"
        placeholder="Username"
        ng-model="user.username"
@@ -260,7 +261,19 @@
 
      <!-- Login button -->
      <button type="submit" class="btn btn-primary">Log In</button>
-   </form>
+  </form>
+
+    <!--Guest Instructions -->
+     <h6>To log in as a guest, use "guest" for both username and password.
+       <br><br><span style="line-height:1.5em;">Or, to make it easier:<br>
+         <input type="radio" ng-model="user.username"
+                value="guest"></input>&nbsp;&nbsp; click here<br>
+         <input type="radio" ng-model="user.password"
+                value="guest"></input>&nbsp; and here.<br>
+         Now click log in or press enter.</h6></span>
+         <h6>If you would like to register a new account, please
+         <a href="#/register">visit the registration page.</a></h6>
+
 </script><!-- End of login page template -->
 
 <!-- Register page template -->
@@ -280,6 +293,7 @@
      <div class="form-group">
        <input type="text"
        class="form-control"
+       id="trial"
        placeholder="Username"
        ng-model="user.username"
        style="width:30%;"></input>
@@ -296,7 +310,11 @@
 
      <!-- Register button -->
      <button type="submit" class="btn btn-primary">Register</button>
-   </form>
+  </form>
+
+  <!-- Guest instructions -->
+  <h6>To log in as a guest, please <a href="#/login">visit the log in page</a> and follow the directions.</h6>
+
 </script> <!-- End of register page template -->
 
 </body>
