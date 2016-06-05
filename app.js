@@ -7,15 +7,14 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 
-mongoose.connect('mongodb://localhost/news');
+//mongoose.connect('mongodb://localhost/news');
+mongoose.connect('mongodb://sschapma:qwerty@ds023603.mlab.com:23603/heroku_3fbzzf2t');
 require('./models/Posts');
 require('./models/Comments');
 require('./models/Users');
-
 require('./config/passport');
 
 var routes = require('./routes/index');
-
 var app = express();
 
 // view engine setup
@@ -28,9 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(passport.initialize());
-
 app.use('/', routes);
 
 /// catch 404 and forward to error handler
