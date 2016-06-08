@@ -138,6 +138,7 @@
         <!-- Displays author floated to the right -->
           <h6 ng-show="post.author" style="text-align:right;">
             posted by <span class="text-capitalize">{{post.author}}<span>
+            <span ng-show="post.createdOn"> at {{post.createdOn | date : 'h:mm a'}} on {{post.createdOn | date : 'M/d/yy'}}</span>
           </h6>
     </div>
  </div>
@@ -191,6 +192,7 @@
      <!-- Displays author of post -->
      <div ng-show="post.author">
        <h6>posted by <span class="text-capitalize">{{post.author}}</span></h6>
+       <span ng-show="post.createdOn"> at {{post.createdOn | date : 'h:mm a'}} on {{post.createdOn | date : 'M/d/yy'}}</span>
      </div>
    </div>
 
@@ -203,6 +205,7 @@
      <!-- Displays author -->
      <span ng-show="comment.author" class="pull-right" style="font-size:10px;">
        posted by <span class="text-capitalize">{{comment.author}}</span>
+       <span ng-show="comment.createdOn"> at {{comment.createdOn | date : 'h:mm a'}} on {{comment.createdOn | date : 'M/d/yy'}}</span>
      </span><br>
    </div>
 
