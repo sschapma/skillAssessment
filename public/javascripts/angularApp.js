@@ -147,6 +147,7 @@ function($scope, posts, auth){
       title: $scope.title,
       link: $scope.link,
       body: $scope.body,
+      createdOn: Date.now(),
       isPost: true,
     });
     //returns empty values after post is created
@@ -172,6 +173,7 @@ function($scope, posts, post, auth){
     posts.addComment(post._id, {
       body: $scope.body,
       author: 'user',
+      createdOn: Date.now(),
     }).success(function(comment) {
       $scope.post.comments.push(comment);
     });
