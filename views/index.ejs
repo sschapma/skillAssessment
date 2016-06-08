@@ -191,8 +191,7 @@
      </span>
      <!-- Displays author of post -->
      <div ng-show="post.author">
-       <h6>posted by <span class="text-capitalize">{{post.author}}</span></h6>
-       <span ng-show="post.createdOn"> at {{post.createdOn | date : 'h:mm a'}} on {{post.createdOn | date : 'M/d/yy'}}</span>
+       <h6>posted by <span class="text-capitalize">{{post.author}}</span> at {{post.createdOn | date : 'h:mm a'}} on {{post.createdOn | date : 'M/d/yy'}}</h6>
      </div>
    </div>
 
