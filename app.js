@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 
 //connect to database (currently using a live database.)
-mongoose.connect('mongodb://sschapma:qwerty@ds023603.mlab.com:23603/heroku_3fbzzf2t');
+mongoose.connect('mongodb://sschapma:qwerty@ds025603.mlab.com:25603/heroku_d719vzc0');
 //mongoose.connect('mongodb://localhost/news'); //use this to connect to a local db
 require('./models/Posts');
 require('./models/Comments');
