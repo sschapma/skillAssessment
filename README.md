@@ -12,7 +12,7 @@
 ####To install locally: (You may need to use the 'sudo' command)
 
     git clone https://github.com/sschapma/skillAssessment.git
-    npm install -g
+    npm install
     npm start
 
 ####It's as simple as that!

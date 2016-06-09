@@ -1,4 +1,4 @@
-angular.module('flapperNews', ['ui.router'])
+angular.module('samsForum', ['ui.router'])
 .config([
 '$stateProvider',
 '$urlRouterProvider',
@@ -88,10 +88,10 @@ function($stateProvider, $urlRouterProvider) {
 .factory('auth', ['$http', '$window', '$rootScope', function($http, $window, $rootScope){
    var auth = {
     saveToken: function (token){ //saves token to local storage
-      $window.localStorage['flapper-news-token'] = token;
+      $window.localStorage['sams-forum-token'] = token;
     },
     getToken: function (){ //gets token from local storage
-      return $window.localStorage['flapper-news-token'];
+      return $window.localStorage['sams-forum-token'];
     },
     isLoggedIn: function(){
       var token = auth.getToken();
@@ -124,7 +124,7 @@ function($stateProvider, $urlRouterProvider) {
       });
     },
     logOut: function(){
-      $window.localStorage.removeItem('flapper-news-token');
+      $window.localStorage.removeItem('sams-forum-token');
     }
   };
 
