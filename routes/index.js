@@ -63,6 +63,22 @@ router.get('/posts/:post', function(req, res, next) {
   });
 });
 
+// upvote a post
+router.put('/posts/:post/upvote', auth, function(req, res, next) {
+  req.post.upvote(function(err, post){
+    if (err) { return next(err); }
+    res.json(post);
+  });
+});
+
+// downvote a post
+router.put('/posts/:post/downvote', auth, function(req, res, next) {
+  req.post.downvote(function(err, post){
+    if (err) { return next(err); }
+    res.json(post);
+  });
+});
+
 // create a new comment
 router.post('/posts/:post/comments', auth, function(req, res, next) {
   var comment = new Comment(req.body);
@@ -75,6 +91,23 @@ router.post('/posts/:post/comments', auth, function(req, res, next) {
       if(err){ return next(err); }
       res.json(comment);
     });
+  });
+});
+
+// upvote a comment
+router.put('/posts/:post/comments/:comment/upvoteComment', auth, function(req, res, next) {
+  req.comment.upvoteComment(function(err, comment){
+    if (err) { return next(err); }
+
+    res.json(comment);
+  });
+});
+// downvote a comment
+router.put('/posts/:post/comments/:comment/downvoteComment', auth, function(req, res, next) {
+  req.comment.downvoteComment(function(err, comment){
+    if (err) { return next(err); }
+
+    res.json(comment);
   });
 });
 

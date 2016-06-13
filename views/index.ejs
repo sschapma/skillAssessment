@@ -7,6 +7,12 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+  <!-- jQuery 2.2.0 -->
+  <script src="plugins/jQuery/jQuery-2.2.0.min.js"></script>
+  <!-- Bootstrap 3.3.6 -->
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/app.min.js"></script>
   <!-- Angular Scripts -->
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
@@ -20,6 +26,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+  <!-- Personal style-->
+  <link rel="stylesheet" href="/dist/css/forum.css">
   <!-- AdminLTE Skins. -->
   <link rel="stylesheet" href="/dist/css/skin-blue.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -118,28 +126,31 @@
     <strong>Copyright &copy; 2016 <a href="http://sschapman.com/">Sam Chapman</a>.</strong> All rights reserved.
   </footer>
 
-<!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 2.2.0 -->
-<script src="plugins/jQuery/jQuery-2.2.0.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
 
 <!-- Home page template -->
 <script type="text/ng-template" id="/home.html">
  <!-- Loops through posts -->
- <div ng-repeat="post in posts">
-     <div style="font-size:20px; margin-bottom:5px; padding: 0px 10px;
-     border:1px solid gray; border-radius:2px; background-color:#FEFEFE;">
+ <div ng-repeat="post in posts | orderBy: '-votes'">
+   <!--Voting system-->
+   <div id="votingSystem" class="pull-left">
+     <i ng-click="increaseVotes(post)" class="ion-chevron-up" id="up"></i><br>
+       &nbsp;{{post.votes}}<br>
+     <i ng-click="decreaseVotes(post)" class="ion-chevron-down" id="down"></i>
+   </div>
+     <div id="postContainer">
        <!-- Displays title and links to comment page -->
+
        <a href="#/posts/{{post._id}}"><strong>{{post.title}}</strong></a>
+       <h6><span style="text-align:left;">{{post.comments.length}} comments</span>
+         <span style="margin-left:10px;">share</span>
+         <span style="margin-left:10px;">hide</span>
+         <span style="margin-left:10px;">delete</span>
         <!-- Displays author floated to the right -->
-          <h6 ng-show="post.author" style="text-align:right;">
-            posted by <span class="text-capitalize">{{post.author}}<span>
-            <span ng-show="post.createdOn"> at {{post.createdOn | date : 'h:mm a'}} on {{post.createdOn | date : 'M/d/yy'}}</span>
-          </h6>
+        <span ng-show="post.author" style="float:right;">
+          posted by <span class="text-capitalize">{{post.author}}</span>
+        <span id="dateTime"> at {{post.createdOn | date : 'h:mm a'}} on {{post.createdOn | date : 'M/d/yy'}}</span>
+      </h6>
     </div>
  </div>
  <!-- Makes the add post form visible is user is logged in -->
@@ -196,16 +207,21 @@
    </div>
 
    <!-- Loops through comments -->
-   <div ng-repeat="comment in post.comments"
-        style="border:1px solid gray; border-radius:5px;
-        background-color: #FEFEFE; padding:0 5px 0 5px; margin-top:5px;">
+   <div ng-repeat="comment in post.comments | orderBy: '-votes'">
+     <!--Voting system-->
+     <div id="votingSystem" class="pull-left">
+       <i ng-click="increaseCommentVotes(comment)" class="ion-chevron-up"></i><br>
+         &nbsp;{{comment.votes}}<br>
+       <i ng-click="decreaseCommentVotes(comment)" class="ion-chevron-down"></i>
+     </div>
      <!-- Displays comment -->
-     <h4>{{comment.body}}</h4>
+     <div id="commentContainer">
+     <h4><strong>{{comment.body}}</strong></h4>
      <!-- Displays author -->
-     <span ng-show="comment.author" class="pull-right" style="font-size:10px;">
+     <h6><span>delete</span><span class="pull-right">
        posted by <span class="text-capitalize">{{comment.author}}</span>
-       <span ng-show="comment.createdOn"> at {{comment.createdOn | date : 'h:mm a'}} on {{comment.createdOn | date : 'M/d/yy'}}</span>
-     </span><br>
+       <span> at {{comment.createdOn | date : 'h:mm a'}} on {{comment.createdOn | date : 'M/d/yy'}}</span>
+     </span><br></h6></div>
    </div>
 
    <!-- Displays add comment box if logged in -->

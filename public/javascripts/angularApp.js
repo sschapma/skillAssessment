@@ -1,3 +1,4 @@
+
 angular.module('samsForum', ['ui.router'])
 .config([
 '$stateProvider',
@@ -75,10 +76,39 @@ function($stateProvider, $urlRouterProvider) {
       o.posts.push(data);
     });
   };
+  o.upvote = function(post) {
+    return $http.put('/posts/' + post._id + '/upvote', null, {
+      headers: {Authorization: 'Bearer '+auth.getToken()}
+    }).success(function(data){
+      post.votes += 1;
+    });
+  };
+  o.downvote = function(post) {
+    return $http.put('/posts/' + post._id + '/downvote', null, {
+      headers: {Authorization: 'Bearer '+auth.getToken()}
+    }).success(function(data){
+      post.votes -= 1;
+    });
+  };
   //adds a comment
   o.addComment = function(id, comment) {
     return $http.post('/posts/' + id + '/comments', comment, {
       headers: {Authorization: 'Bearer '+auth.getToken()}
+    });
+  };
+
+  o.upvoteComment = function(post, comment) {
+    return $http.put('/posts/' + post._id + '/comments/'+ comment._id + '/upvoteComment', null, {
+      headers: {Authorization: 'Bearer '+auth.getToken()}
+    }).success(function(data){
+      comment.votes += 1;
+    });
+  };
+  o.downvoteComment = function(post, comment) {
+    return $http.put('/posts/' + post._id + '/comments/'+ comment._id + '/downvoteComment', null, {
+      headers: {Authorization: 'Bearer '+auth.getToken()}
+    }).success(function(data){
+      comment.votes -= 1;
     });
   };
 
@@ -135,7 +165,7 @@ function($stateProvider, $urlRouterProvider) {
 '$scope',
 'posts',
 'auth',
-function($scope, posts, auth){
+function($scope, posts, auth, upvote, downvote){
   $scope.posts = posts.posts;
   $scope.isLoggedIn = auth.isLoggedIn;
 
@@ -145,15 +175,21 @@ function($scope, posts, auth){
     //creates post
     posts.create({
       title: $scope.title,
+      votes: 0,
+      createdOn: Date.now(),
       link: $scope.link,
       body: $scope.body,
-      createdOn: Date.now(),
-      isPost: true,
     });
     //returns empty values after post is created
     $scope.title = '';
     $scope.link = '';
     $scope.body = '';
+  };
+  $scope.increaseVotes = function(post){
+      posts.upvote(post, auth);
+  };
+  $scope.decreaseVotes = function(post){
+      posts.downvote(post, auth);
   };
 
 }])
@@ -174,11 +210,18 @@ function($scope, posts, post, auth){
       body: $scope.body,
       author: 'user',
       createdOn: Date.now(),
+      votes: 0,
     }).success(function(comment) {
       $scope.post.comments.push(comment);
     });
     //returns empty value after posting comment
     $scope.body = '';
+  };
+  $scope.increaseCommentVotes = function(comment){
+      posts.upvoteComment(post, comment, auth);
+  };
+  $scope.decreaseCommentVotes = function(comment){
+      posts.downvoteComment(post, comment, auth);
   };
 
 }])
