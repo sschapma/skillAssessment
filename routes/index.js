@@ -63,6 +63,13 @@ router.get('/posts/:post', function(req, res, next) {
   });
 });
 
+// return a post
+router.delete('/posts/:post', function(req, res, next) {
+  req.post.delete(function(err, post) {
+    res.json(post);
+  });
+});
+
 // upvote a post
 router.put('/posts/:post/upvote', auth, function(req, res, next) {
   req.post.upvote(function(err, post){

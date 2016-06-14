@@ -5,6 +5,15 @@
   }
 }
 
+@media screen and (max-width: 540px) {
+  #social:before {
+    content: '\A';
+    white-space: pre;
+    line-height: 2em;
+  }
+}
+
+
 #votingSystem {
   line-height:.8em;
   margin-top:12px;
@@ -29,14 +38,6 @@
   margin-left:20px;
 }
 
-.ion-chevron-up:hover, .ion-chevron-down:hover {
+.ion-chevron-up:hover, .ion-chevron-down:hover, .share {
   cursor: pointer;
-}
-
-.orange {
-  font-color: orange;
-}
-
-.black {
-  font-color: black;
 }

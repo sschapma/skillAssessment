@@ -62,6 +62,7 @@ function($stateProvider, $urlRouterProvider) {
       return res.data;
     });
   };
+
   //gets all posts
   o.getAll = function() {
     return $http.get('/posts').success(function(data){
@@ -76,6 +77,16 @@ function($stateProvider, $urlRouterProvider) {
       o.posts.push(data);
     });
   };
+
+  //delete post
+  o.delete = function(post) {
+    return $http.delete('/posts' + id, {
+      headers: {Authorization: 'Bearer '+auth.getToken()}
+    }).success(function(data){
+      o.posts.delete(data);
+    });
+  };
+
   o.upvote = function(post) {
     return $http.put('/posts/' + post._id + '/upvote', null, {
       headers: {Authorization: 'Bearer '+auth.getToken()}
@@ -185,11 +196,15 @@ function($scope, posts, auth, upvote, downvote){
     $scope.link = '';
     $scope.body = '';
   };
+
   $scope.increaseVotes = function(post){
       posts.upvote(post, auth);
   };
   $scope.decreaseVotes = function(post){
       posts.downvote(post, auth);
+  };
+  $scope.deletePost = function(post){
+      posts.delete(post, auth);
   };
 
 }])
@@ -223,6 +238,7 @@ function($scope, posts, post, auth){
   $scope.decreaseCommentVotes = function(comment){
       posts.downvoteComment(post, comment, auth);
   };
+
 
 }])
 //controls registering and logging in

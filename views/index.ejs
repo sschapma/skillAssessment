@@ -17,6 +17,9 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
   <script src="/javascripts/angularApp.js"></script>
+  <script type="text/javascript">var switchTo5x=true;</script>
+  <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+  <script type="text/javascript">stLight.options({publisher: "2acde39e-d1d1-48e8-9318-a10b7c999ec8", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
 
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
@@ -143,9 +146,15 @@
 
        <a href="#/posts/{{post._id}}"><strong>{{post.title}}</strong></a>
        <h6><span style="text-align:left;">{{post.comments.length}} comments</span>
-         <span style="margin-left:10px;">share</span>
-         <span style="margin-left:10px;">hide</span>
-         <span style="margin-left:10px;">delete</span>
+        <span style="margin-left:10px;" ng-click="deletePost(post)">delete</span>
+         <span style="margin-left:10px;" class="share" ng-click="share = share ? false : true">share</span>
+           <span ng-show="share" id="social">
+             <span class='st_facebook'></span>
+             <span class='st_twitter'></span>
+             <span class='st_reddit'></span>
+             <span class='st_linkedin'></span>
+             <span class='st_pinterest'></span>
+           </span>
         <!-- Displays author floated to the right -->
         <span ng-show="post.author" style="float:right;">
           posted by <span class="text-capitalize">{{post.author}}</span>
