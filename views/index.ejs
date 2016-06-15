@@ -17,9 +17,8 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
   <script src="/javascripts/angularApp.js"></script>
-  <script type="text/javascript">var switchTo5x=true;</script>
-  <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-  <script type="text/javascript">stLight.options({publisher: "2acde39e-d1d1-48e8-9318-a10b7c999ec8", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+  <!-- Social Sharing -->
+  <script src="dist/js/angular-socialshare.js"></script>
 
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
@@ -137,23 +136,33 @@
  <div ng-repeat="post in posts | orderBy: '-votes'">
    <!--Voting system-->
    <div id="votingSystem" class="pull-left">
-     <i ng-click="increaseVotes(post)" class="ion-chevron-up" id="up"></i><br>
-       &nbsp;{{post.votes}}<br>
-     <i ng-click="decreaseVotes(post)" class="ion-chevron-down" id="down"></i>
+     <i ng-click="increaseVotes(post)" class="ion-arrow-up-b" id="upvote"></i><br>
+       <span id="voteAmount">{{post.votes}}<br></span>
+     <i ng-click="decreaseVotes(post)" class="ion-arrow-down-b" id="downvote"></i>
    </div>
      <div id="postContainer">
        <!-- Displays title and links to comment page -->
 
        <a href="#/posts/{{post._id}}"><strong>{{post.title}}</strong></a>
        <h6><span style="text-align:left;">{{post.comments.length}} comments</span>
-        <span style="margin-left:10px;" ng-click="deletePost(post)">delete</span>
+        <span style="margin-left:10px;" class="delete" ng-click="deletePost(post)">delete</span>
          <span style="margin-left:10px;" class="share" ng-click="share = share ? false : true">share</span>
            <span ng-show="share" id="social">
-             <span class='st_facebook'></span>
-             <span class='st_twitter'></span>
-             <span class='st_reddit'></span>
-             <span class='st_linkedin'></span>
-             <span class='st_pinterest'></span>
+             <a href="#" socialshare socialshare-provider="twitter"
+             socialshare-text="{{post.title}}" socialshare-url="http://localhost:3000/posts/{{post._id}}">
+           <i class="fa fa-twitter-square" id="twitter" aria-hidden="true"></i></a>
+
+           <a href="#" socialshare socialshare-provider="facebook"
+           socialshare-text="{{post.title}}" socialshare-url="http://localhost:3000/posts/{{post._id}}">
+         <i class="fa fa-facebook-square" id="facebook" aria-hidden="true"></i></a>
+
+         <a href="#" socialshare socialshare-provider="reddit"
+         socialshare-text="{{post.title}}" socialshare-url="http://localhost:3000/posts/{{post._id}}">
+       <img src="//www.redditstatic.com/spreddit1.gif"  id="reddit" alt="submit to reddit" border="0" /></a>
+
+       <a href="#" socialshare socialshare-provider="linkedin" socialshare-description="{{post.body}}"
+       socialshare-text="{{post.title}}" socialshare-url="http://localhost:3000/posts/{{post._id}}">
+     <i class="fa fa-linkedin-square" id="linkedin" aria-hidden="true"></i></a>
            </span>
         <!-- Displays author floated to the right -->
         <span ng-show="post.author" style="float:right;">
@@ -219,9 +228,9 @@
    <div ng-repeat="comment in post.comments | orderBy: '-votes'">
      <!--Voting system-->
      <div id="votingSystem" class="pull-left">
-       <i ng-click="increaseCommentVotes(comment)" class="ion-chevron-up"></i><br>
-         &nbsp;{{comment.votes}}<br>
-       <i ng-click="decreaseCommentVotes(comment)" class="ion-chevron-down"></i>
+       <i ng-click="increaseCommentVotes(comment)" class="ion-arrow-up-b" id="upvote"></i><br>
+         <span id="voteAmount">{{comment.votes}}<br></span>
+       <i ng-click="decreaseCommentVotes(comment)" class="ion-arrow-down-b" id="downvote"></i>
      </div>
      <!-- Displays comment -->
      <div id="commentContainer">

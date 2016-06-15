@@ -1,5 +1,5 @@
 
-angular.module('samsForum', ['ui.router'])
+angular.module('samsForum', ['ui.router', '720kb.socialshare',])
 .config([
 '$stateProvider',
 '$urlRouterProvider',
@@ -208,9 +208,21 @@ function($scope, posts, auth, upvote, downvote, $route){
 
   $scope.increaseVotes = function(post){
       posts.upvote(post, auth);
+      var myEl = $('#upvote');
+      var myEl2 = $('#voteAmount');
+      var myEl3 = $('#downvote');
+      myEl.css("color", "#FF8A5E");
+      myEl2.css("color", "#FF8A5E");
+      myEl3.css("color", "black");
   };
   $scope.decreaseVotes = function(post){
       posts.downvote(post, auth);
+      var myEl = $('#downvote');
+      var myEl2 = $('#voteAmount');
+      var myEl3 = $('#upvote');
+      myEl.css("color", "#9494FF");
+      myEl2.css("color", "#9494FF");
+      myEl3.css("color", "black");
   };
   $scope.deletePost = function(post){
       posts.delete(post, auth);
@@ -249,9 +261,9 @@ function($scope, posts, post, auth){
       posts.downvoteComment(post, comment, auth);
   };
   $scope.removeComment = function(comment){
+      posts.deleteComment(post, comment, auth);
       var index = $scope.post.comments.indexOf(comment);
       $scope.post.comments.splice(index, 1);
-      posts.deleteComment(post, comment, auth);
   };
 
 

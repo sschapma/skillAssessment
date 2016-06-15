@@ -9,7 +9,6 @@
   #social:before {
     content: '\A';
     white-space: pre;
-    line-height: 2em;
   }
 }
 
@@ -17,6 +16,8 @@
 #votingSystem {
   line-height:.8em;
   margin-top:12px;
+  text-align: center;
+  font-size: 1.2em;
 }
 
 #postContainer {
@@ -38,6 +39,34 @@
   margin-left:20px;
 }
 
-.ion-chevron-up:hover, .ion-chevron-down:hover, .share {
+.ion-arrow-up-b:hover, .ion-arrow-down-b:hover, .share, .delete {
   cursor: pointer;
+}
+
+#social {
+  font-size: 1.7em;
+}
+
+#facebook {
+  color: #3b5998;
+}
+#twitter {
+  color: #4099FF;
+}
+#linkedin {
+  color: #4875B4;
+}
+#reddit {
+  height:18px;
+  width: 18px;
+  border-radius: 3px;
+  margin-top: -4px;
+}
+
+upvote {
+  color: #FF8A5E;
+}
+
+downvote {
+  color: #9494FF;
 }
