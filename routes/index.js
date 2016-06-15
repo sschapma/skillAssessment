@@ -63,11 +63,13 @@ router.get('/posts/:post', function(req, res, next) {
   });
 });
 
-// return a post
+// delete a post
 router.delete('/posts/:post', function(req, res, next) {
-  req.post.delete(function(err, post) {
-    res.json(post);
-  });
+    req.post.remove(function(err, post) {
+        if (err)
+            res.send(err);
+        res.json(post);
+    });
 });
 
 // upvote a post
@@ -99,6 +101,15 @@ router.post('/posts/:post/comments', auth, function(req, res, next) {
       res.json(comment);
     });
   });
+});
+
+// delete a comment
+router.delete('/posts/:post/comments/:comment', auth, function(req, res, next) {
+    req.comment.remove(function(err, comment) {
+        if (err)
+            res.send(err);
+        res.json(comment);
+    });
 });
 
 // upvote a comment

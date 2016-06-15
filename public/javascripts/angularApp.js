@@ -80,10 +80,10 @@ function($stateProvider, $urlRouterProvider) {
 
   //delete post
   o.delete = function(post) {
-    return $http.delete('/posts' + id, {
+    return $http.delete('/posts/' + post._id, {
       headers: {Authorization: 'Bearer '+auth.getToken()}
     }).success(function(data){
-      o.posts.delete(data);
+      o.getAll();
     });
   };
 
@@ -105,6 +105,15 @@ function($stateProvider, $urlRouterProvider) {
   o.addComment = function(id, comment) {
     return $http.post('/posts/' + id + '/comments', comment, {
       headers: {Authorization: 'Bearer '+auth.getToken()}
+    });
+  };
+
+  //delete comment
+  o.deleteComment = function(post, comment) {
+    return $http.delete('/posts/' + post._id + '/comments/'+ comment._id, {
+      headers: {Authorization: 'Bearer '+auth.getToken()}
+    }).success(function(data){
+
     });
   };
 
@@ -176,7 +185,7 @@ function($stateProvider, $urlRouterProvider) {
 '$scope',
 'posts',
 'auth',
-function($scope, posts, auth, upvote, downvote){
+function($scope, posts, auth, upvote, downvote, $route){
   $scope.posts = posts.posts;
   $scope.isLoggedIn = auth.isLoggedIn;
 
@@ -205,6 +214,7 @@ function($scope, posts, auth, upvote, downvote){
   };
   $scope.deletePost = function(post){
       posts.delete(post, auth);
+
   };
 
 }])
@@ -237,6 +247,11 @@ function($scope, posts, post, auth){
   };
   $scope.decreaseCommentVotes = function(comment){
       posts.downvoteComment(post, comment, auth);
+  };
+  $scope.removeComment = function(comment){
+      var index = $scope.post.comments.indexOf(comment);
+      $scope.post.comments.splice(index, 1);
+      posts.deleteComment(post, comment, auth);
   };
 
 

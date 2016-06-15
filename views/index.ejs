@@ -227,7 +227,7 @@
      <div id="commentContainer">
      <h4><strong>{{comment.body}}</strong></h4>
      <!-- Displays author -->
-     <h6><span>delete</span><span class="pull-right">
+     <h6><span ng-click="removeComment(comment)">delete</span><span class="pull-right">
        posted by <span class="text-capitalize">{{comment.author}}</span>
        <span> at {{comment.createdOn | date : 'h:mm a'}} on {{comment.createdOn | date : 'M/d/yy'}}</span>
      </span><br></h6></div>
