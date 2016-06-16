@@ -136,9 +136,9 @@
  <div ng-repeat="post in posts | orderBy: '-votes'">
    <!--Voting system-->
    <div id="votingSystem" class="pull-left">
-     <i ng-click="increaseVotes(post)" class="ion-arrow-up-b" id="upvote"></i><br>
-       <span id="voteAmount">{{post.votes}}<br></span>
-     <i ng-click="decreaseVotes(post)" class="ion-arrow-down-b" id="downvote"></i>
+     <i ng-click="increaseVotes(post)" class="ion-arrow-up-b upvote"></i><br>
+       <span class="voteAmount">{{post.votes}}<br></span>
+     <i ng-click="decreaseVotes(post)" class="ion-arrow-down-b downvote"></i>
    </div>
      <div id="postContainer">
        <!-- Displays title and links to comment page -->
@@ -228,9 +228,9 @@
    <div ng-repeat="comment in post.comments | orderBy: '-votes'">
      <!--Voting system-->
      <div id="votingSystem" class="pull-left">
-       <i ng-click="increaseCommentVotes(comment)" class="ion-arrow-up-b" id="upvote"></i><br>
-         <span id="voteAmount">{{comment.votes}}<br></span>
-       <i ng-click="decreaseCommentVotes(comment)" class="ion-arrow-down-b" id="downvote"></i>
+       <i ng-click="increaseCommentVotes(comment)" class="ion-arrow-up-b upvote"></i><br>
+         <span class="voteAmount">{{comment.votes}}<br></span>
+       <i ng-click="decreaseCommentVotes(comment)" class="ion-arrow-down-b downvote"></i>
      </div>
      <!-- Displays comment -->
      <div id="commentContainer">

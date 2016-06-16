@@ -208,21 +208,23 @@ function($scope, posts, auth, upvote, downvote, $route){
 
   $scope.increaseVotes = function(post){
       posts.upvote(post, auth);
-      var myEl = $('#upvote');
-      var myEl2 = $('#voteAmount');
-      var myEl3 = $('#downvote');
-      myEl.css("color", "#FF8A5E");
-      myEl2.css("color", "#FF8A5E");
-      myEl3.css("color", "black");
+      var index = $scope.posts.indexOf(post);
+      var myEl = document.getElementsByClassName('upvote');
+      var myEl2 = document.getElementsByClassName('voteAmount');
+      var myEl3 = document.getElementsByClassName('downvote');
+      myEl[index].style.color = "#FF8A5E";
+      myEl2[index].style.color = "#FF8A5E";
+      myEl3[index].style.color = "black";
   };
   $scope.decreaseVotes = function(post){
       posts.downvote(post, auth);
-      var myEl = $('#downvote');
-      var myEl2 = $('#voteAmount');
-      var myEl3 = $('#upvote');
-      myEl.css("color", "#9494FF");
-      myEl2.css("color", "#9494FF");
-      myEl3.css("color", "black");
+      var index = $scope.posts.indexOf(post);
+      var myEl = document.getElementsByClassName('upvote');
+      var myEl2 = document.getElementsByClassName('voteAmount');
+      var myEl3 = document.getElementsByClassName('downvote');
+      myEl[index].style.color = "black";
+      myEl2[index].style.color = "#9494FF";
+      myEl3[index].style.color = "#9494FF";
   };
   $scope.deletePost = function(post){
       posts.delete(post, auth);
@@ -256,9 +258,27 @@ function($scope, posts, post, auth){
   };
   $scope.increaseCommentVotes = function(comment){
       posts.upvoteComment(post, comment, auth);
+      var index = $scope.post.comments.indexOf(comment);
+      console.log(index);
+      var myEl = document.getElementsByClassName('upvote');
+      var myEl2 = document.getElementsByClassName('voteAmount');
+      var myEl3 = document.getElementsByClassName('downvote');
+      console.log(myEl);
+      console.log(myEl2);
+      console.log(myEl3);
+      myEl[index].style.color = "#FF8A5E";
+      myEl2[index].style.color = "#FF8A5E";
+      myEl3[index].style.color = "black";
   };
   $scope.decreaseCommentVotes = function(comment){
       posts.downvoteComment(post, comment, auth);
+      var index = $scope.post.comments.indexOf(comment);
+      var myEl = document.getElementsByClassName('upvote');
+      var myEl2 = document.getElementsByClassName('voteAmount');
+      var myEl3 = document.getElementsByClassName('downvote');
+      myEl[index].style.color = "black";
+      myEl2[index].style.color = "#9494FF";
+      myEl3[index].style.color = "#9494FF";
   };
   $scope.removeComment = function(comment){
       posts.deleteComment(post, comment, auth);
