@@ -145,7 +145,7 @@
 
        <a href="#/posts/{{post._id}}"><strong>{{post.title}}</strong></a>
        <h6><span style="text-align:left;">{{post.comments.length}} comments</span>
-        <span style="margin-left:10px;" class="delete" ng-click="deletePost(post)">delete</span>
+        <span style="margin-left:10px;" class="delete" ng-show="hideDelete(auth, post)" ng-click="deletePost(post)">delete</span>
          <span style="margin-left:10px;" class="share" ng-click="share = share ? false : true">share</span>
            <span ng-show="share" id="social">
              <a href="#" socialshare socialshare-provider="twitter"

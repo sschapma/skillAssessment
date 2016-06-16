@@ -188,6 +188,7 @@ function($stateProvider, $urlRouterProvider) {
 function($scope, posts, auth, upvote, downvote, $route){
   $scope.posts = posts.posts;
   $scope.isLoggedIn = auth.isLoggedIn;
+  $scope.currentUser = auth.currentUser;
 
   $scope.addPost = function(){
     //prevents empty posts
@@ -228,7 +229,11 @@ function($scope, posts, auth, upvote, downvote, $route){
   };
   $scope.deletePost = function(post){
       posts.delete(post, auth);
-
+  };
+  $scope.hideDelete = function(auth, post){
+    if ($scope.currentUser() == post.author) {
+      return true;
+    }
   };
 
 }])
@@ -263,9 +268,6 @@ function($scope, posts, post, auth){
       var myEl = document.getElementsByClassName('upvote');
       var myEl2 = document.getElementsByClassName('voteAmount');
       var myEl3 = document.getElementsByClassName('downvote');
-      console.log(myEl);
-      console.log(myEl2);
-      console.log(myEl3);
       myEl[index].style.color = "#FF8A5E";
       myEl2[index].style.color = "#FF8A5E";
       myEl3[index].style.color = "black";
