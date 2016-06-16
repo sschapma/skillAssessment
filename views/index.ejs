@@ -133,7 +133,7 @@
 <!-- Home page template -->
 <script type="text/ng-template" id="/home.html">
  <!-- Loops through posts -->
- <div ng-repeat="post in posts | orderBy: '-votes'">
+ <div ng-repeat="post in posts">
    <!--Voting system-->
    <div id="votingSystem" class="pull-left">
      <i ng-click="increaseVotes(post)" class="ion-arrow-up-b upvote"></i><br>
@@ -225,7 +225,7 @@
    </div>
 
    <!-- Loops through comments -->
-   <div ng-repeat="comment in post.comments | orderBy: '-votes'">
+   <div ng-repeat="comment in post.comments">
      <!--Voting system-->
      <div id="votingSystem" class="pull-left">
        <i ng-click="increaseCommentVotes(comment)" class="ion-arrow-up-b upvote"></i><br>
@@ -236,7 +236,7 @@
      <div id="commentContainer">
      <h4><strong>{{comment.body}}</strong></h4>
      <!-- Displays author -->
-     <h6><span ng-click="removeComment(comment)">delete</span><span class="pull-right">
+     <h6><span ng-show="hideCommentDelete(auth, comment)" ng-click="removeComment(comment)">delete</span><span class="pull-right">
        posted by <span class="text-capitalize">{{comment.author}}</span>
        <span> at {{comment.createdOn | date : 'h:mm a'}} on {{comment.createdOn | date : 'M/d/yy'}}</span>
      </span><br></h6></div>

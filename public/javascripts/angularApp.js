@@ -168,7 +168,6 @@ function($stateProvider, $urlRouterProvider) {
       });
     },
     logIn: function(user){
-      console.log(user);
       return $http.post('/login', user).success(function(data){
         auth.saveToken(data.token);
       });
@@ -185,10 +184,16 @@ function($stateProvider, $urlRouterProvider) {
 '$scope',
 'posts',
 'auth',
-function($scope, posts, auth, upvote, downvote, $route){
+function($scope, posts, auth, upvote, downvote){
   $scope.posts = posts.posts;
   $scope.isLoggedIn = auth.isLoggedIn;
   $scope.currentUser = auth.currentUser;
+  $scope.upDisabled = [];
+  $scope.downDisabled = [];
+  for (i=0; i<$scope.posts.length; i++){
+    $scope.upDisabled.push(false);
+    $scope.downDisabled.push(false);
+  }
 
   $scope.addPost = function(){
     //prevents empty posts
@@ -208,25 +213,35 @@ function($scope, posts, auth, upvote, downvote, $route){
   };
 
   $scope.increaseVotes = function(post){
+    var index = $scope.posts.indexOf(post);
+    if (!$scope.upDisabled[index]) {
       posts.upvote(post, auth);
-      var index = $scope.posts.indexOf(post);
       var myEl = document.getElementsByClassName('upvote');
       var myEl2 = document.getElementsByClassName('voteAmount');
       var myEl3 = document.getElementsByClassName('downvote');
       myEl[index].style.color = "#FF8A5E";
       myEl2[index].style.color = "#FF8A5E";
       myEl3[index].style.color = "black";
+      $scope.upDisabled[index] = true;
+      $scope.downDisabled[index] = false;
+    }
   };
+
   $scope.decreaseVotes = function(post){
+    var index = $scope.posts.indexOf(post);
+    if (!$scope.downDisabled[index]) {
       posts.downvote(post, auth);
-      var index = $scope.posts.indexOf(post);
       var myEl = document.getElementsByClassName('upvote');
       var myEl2 = document.getElementsByClassName('voteAmount');
       var myEl3 = document.getElementsByClassName('downvote');
       myEl[index].style.color = "black";
       myEl2[index].style.color = "#9494FF";
       myEl3[index].style.color = "#9494FF";
+      $scope.upDisabled[index] = false;
+      $scope.downDisabled[index] = true;
+    }
   };
+
   $scope.deletePost = function(post){
       posts.delete(post, auth);
   };
@@ -246,6 +261,13 @@ function($scope, posts, auth, upvote, downvote, $route){
 function($scope, posts, post, auth){
   $scope.post = post;
   $scope.isLoggedIn = auth.isLoggedIn;
+  $scope.currentUser = auth.currentUser;
+  $scope.upCommentDisabled = [];
+  $scope.downCommentDisabled = [];
+  for (i=0; i<$scope.post.comments.length; i++){
+    $scope.upCommentDisabled.push(false);
+    $scope.downCommentDisabled.push(false);
+  }
   //adds comment to post
   $scope.addComment = function(){
     // prevents empty comment
@@ -262,30 +284,45 @@ function($scope, posts, post, auth){
     $scope.body = '';
   };
   $scope.increaseCommentVotes = function(comment){
+    var index = $scope.post.comments.indexOf(comment);
+    if (!$scope.upCommentDisabled[index]) {
       posts.upvoteComment(post, comment, auth);
-      var index = $scope.post.comments.indexOf(comment);
-      console.log(index);
       var myEl = document.getElementsByClassName('upvote');
       var myEl2 = document.getElementsByClassName('voteAmount');
       var myEl3 = document.getElementsByClassName('downvote');
       myEl[index].style.color = "#FF8A5E";
       myEl2[index].style.color = "#FF8A5E";
       myEl3[index].style.color = "black";
+      $scope.upCommentDisabled[index] = true;
+      $scope.downCommentDisabled[index] = false;
+    }
   };
+
   $scope.decreaseCommentVotes = function(comment){
+    var index = $scope.post.comments.indexOf(comment);
+    if (!$scope.downCommentDisabled[index]) {
       posts.downvoteComment(post, comment, auth);
-      var index = $scope.post.comments.indexOf(comment);
       var myEl = document.getElementsByClassName('upvote');
       var myEl2 = document.getElementsByClassName('voteAmount');
       var myEl3 = document.getElementsByClassName('downvote');
       myEl[index].style.color = "black";
       myEl2[index].style.color = "#9494FF";
       myEl3[index].style.color = "#9494FF";
+      $scope.upCommentDisabled[index] = false;
+      $scope.downCommentDisabled[index] = true;
+    }
   };
+
   $scope.removeComment = function(comment){
       posts.deleteComment(post, comment, auth);
       var index = $scope.post.comments.indexOf(comment);
       $scope.post.comments.splice(index, 1);
+  };
+
+  $scope.hideCommentDelete = function(auth, comment){
+    if ($scope.currentUser() == comment.author) {
+      return true;
+    }
   };
 
 
@@ -305,7 +342,6 @@ function($scope, $state, auth){
     });
   };
   $scope.logIn = function(){
-    console.log($scope.user);
     auth.logIn($scope.user).error(function(error){
       $scope.error = error;
     }).then(function(){
