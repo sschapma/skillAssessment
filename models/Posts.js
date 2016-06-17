@@ -10,11 +10,13 @@ var PostSchema = new mongoose.Schema({
   author: String
 });
 
+//saves upvote to database
 PostSchema.methods.upvote = function(cb) {
   this.votes += 1;
   this.save(cb);
 };
 
+//saves downvote to database
 PostSchema.methods.downvote = function(cb) {
   this.votes -= 1;
   this.save(cb);

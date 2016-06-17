@@ -6,12 +6,11 @@
 }
 
 @media screen and (max-width: 540px) {
-  #social:before {
+  #social:before, .deleteCheck:before {
     content: '\A';
     white-space: pre;
   }
 }
-
 
 #votingSystem {
   line-height:.8em;
@@ -43,6 +42,19 @@
   cursor: pointer;
 }
 
+.deleteCheck {
+margin-left: 5px;
+  color: red;
+}
+
+.deleteCheck:hover {
+  color: white;
+  background-color: red;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0 4px 3px 4px;
+}
+
 #social {
   font-size: 1.7em;
 }
@@ -63,10 +75,27 @@
   margin-top: -4px;
 }
 
-upvote {
-  color: #FF8A5E;
+.comments {
+  color: black;
+}
+.comments:hover {
+  color: black;
+  text-decoration: underline;
 }
 
-downvote {
-  color: #9494FF;
+.postToggle {
+  margin-left: 2%;
+  font-size: 2em;
+  color: #3B8AB9;
+}
+.commentToggle {
+  font-size: 1.5em;
+  margin-top: 15px;
+  color: #3B8AB9;
+}
+.postHeading, .commentHeading {
+  color: black;
+}
+#newPost {
+  margin-left: 2%;
 }

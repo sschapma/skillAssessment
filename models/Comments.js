@@ -8,11 +8,13 @@ var CommentSchema = new mongoose.Schema({
   post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' }
 });
 
+// saves upvote to database
 CommentSchema.methods.upvoteComment = function(cb) {
   this.votes += 1;
   this.save(cb);
 };
 
+//saves downvote to database
 CommentSchema.methods.downvoteComment = function(cb) {
   this.votes -= 1;
   this.save(cb);

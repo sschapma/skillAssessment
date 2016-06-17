@@ -8,6 +8,7 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
+//sets variables for mongoose schema
 var mongoose = require('mongoose');
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
@@ -15,7 +16,7 @@ var User = mongoose.model('User');
 
 var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
-// get post / comments page
+// gets posts from database
 router.get('/posts', function(req, res, next) {
   Post.find(function(err, posts){
     if(err){ return next(err); }
@@ -27,7 +28,6 @@ router.get('/posts', function(req, res, next) {
 router.post('/posts', auth, function(req, res, next) {
   var post = new Post(req.body);
   post.author = req.payload.username;
-  post.link = req._id;
   post.save(function(err, post){
     if(err){ return next(err); }
     res.json(post);
@@ -120,6 +120,7 @@ router.put('/posts/:post/comments/:comment/upvoteComment', auth, function(req, r
     res.json(comment);
   });
 });
+
 // downvote a comment
 router.put('/posts/:post/comments/:comment/downvoteComment', auth, function(req, res, next) {
   req.comment.downvoteComment(function(err, comment){

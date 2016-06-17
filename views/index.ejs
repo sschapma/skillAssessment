@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
   <title>Sam's Forum</title>
+
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -32,12 +34,6 @@
   <link rel="stylesheet" href="/dist/css/forum.css">
   <!-- AdminLTE Skins. -->
   <link rel="stylesheet" href="/dist/css/skin-blue.min.css">
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
 </head>
 
 <body ng-app="samsForum" class="hold-transition skin-blue sidebar-mini">
@@ -132,8 +128,10 @@
 
 <!-- Home page template -->
 <script type="text/ng-template" id="/home.html">
+
  <!-- Loops through posts -->
  <div ng-repeat="post in posts">
+
    <!--Voting system-->
    <div id="votingSystem" class="pull-left">
      <i ng-click="increaseVotes(post)" class="ion-arrow-up-b upvote"></i><br>
@@ -141,70 +139,110 @@
      <i ng-click="decreaseVotes(post)" class="ion-arrow-down-b downvote"></i>
    </div>
      <div id="postContainer">
+
        <!-- Displays title and links to comment page -->
-
        <a href="#/posts/{{post._id}}"><strong>{{post.title}}</strong></a>
-       <h6><span style="text-align:left;">{{post.comments.length}} comments</span>
-        <span style="margin-left:10px;" class="delete" ng-show="hideDelete(auth, post)" ng-click="deletePost(post)">delete</span>
+
+       <!-- Displays number of comments -->
+       <h6><a class="comments" href="#/posts/{{post._id}}"><span style="text-align:left;">{{post.comments.length}} comments</span></a>
+
+         <!-- Toggle social share buttons -->
          <span style="margin-left:10px;" class="share" ng-click="share = share ? false : true">share</span>
+
            <span ng-show="share" id="social">
+
+             <!-- Twitter -->
              <a href="#" socialshare socialshare-provider="twitter"
-             socialshare-text="{{post.title}}" socialshare-url="http://localhost:3000/posts/{{post._id}}">
-           <i class="fa fa-twitter-square" id="twitter" aria-hidden="true"></i></a>
+                socialshare-text="{{post.title}}"
+                socialshare-url="http://localhost:3000/posts/{{post._id}}">
+              <i class="fa fa-twitter-square" id="twitter" aria-hidden="true"></i></a>
 
-           <a href="#" socialshare socialshare-provider="facebook"
-           socialshare-text="{{post.title}}" socialshare-url="http://localhost:3000/posts/{{post._id}}">
-         <i class="fa fa-facebook-square" id="facebook" aria-hidden="true"></i></a>
+             <!-- Facebook -->
+             <a href="#" socialshare socialshare-provider="facebook"
+                socialshare-text="{{post.title}}"
+                socialshare-url="http://localhost:3000/posts/{{post._id}}">
+              <i class="fa fa-facebook-square" id="facebook" aria-hidden="true"></i></a>
 
-         <a href="#" socialshare socialshare-provider="reddit"
-         socialshare-text="{{post.title}}" socialshare-url="http://localhost:3000/posts/{{post._id}}">
-       <img src="//www.redditstatic.com/spreddit1.gif"  id="reddit" alt="submit to reddit" border="0" /></a>
+             <!-- Reddit -->
+             <a href="#" socialshare socialshare-provider="reddit"
+                socialshare-text="{{post.title}}"
+                socialshare-url="http://localhost:3000/posts/{{post._id}}">
+              <img src="//www.redditstatic.com/spreddit1.gif" id="reddit"
+               alt="submit to reddit" border="0" /></a>
 
-       <a href="#" socialshare socialshare-provider="linkedin" socialshare-description="{{post.body}}"
-       socialshare-text="{{post.title}}" socialshare-url="http://localhost:3000/posts/{{post._id}}">
-     <i class="fa fa-linkedin-square" id="linkedin" aria-hidden="true"></i></a>
+            <!-- LinkedIn -->
+             <a href="#" socialshare socialshare-provider="linkedin"
+                socialshare-description="{{post.body}}"
+                socialshare-text="{{post.title}}"
+                socialshare-url="http://localhost:3000/posts/{{post._id}}">
+              <i class="fa fa-linkedin-square" id="linkedin" aria-hidden="true"></i></a>
+
+           </span><!-- End of social buttons -->
+
+
+           <!-- Hides delete button for non-author also toggles delete verification -->
+           <span style="margin-left:10px;" class="delete"
+                 ng-show="hideDelete(auth, post)"
+                 ng-click="deleteCheck = deleteCheck ? false : true">delete
            </span>
+
+           <!-- deletes post -->
+           <strong>
+             <span ng-show="deleteCheck" class="deleteCheck"
+                   ng-click="deletePost(post)">DELETE PERMANENTLY
+             </span>
+           </strong>
+
         <!-- Displays author floated to the right -->
         <span ng-show="post.author" style="float:right;">
           posted by <span class="text-capitalize">{{post.author}}</span>
-        <span id="dateTime"> at {{post.createdOn | date : 'h:mm a'}} on {{post.createdOn | date : 'M/d/yy'}}</span>
-      </h6>
+          <!-- Displays time stamp (on large screens) -->
+          <span id="dateTime"> at {{post.createdOn | date : 'h:mm a'}} on {{post.createdOn | date : 'M/d/yy'}}</span>
+        </span></h6>
     </div>
  </div>
- <!-- Makes the add post form visible is user is logged in -->
- <form ng-submit="addPost()"
-       style="margin-top:30px;"
-       ng-show="isLoggedIn()">
 
-     <h3>Add a new post</h3>
+ <!-- Toggles the add post form (only visible is user is logged in) -->
+  <i class="ion-plus-circled postToggle" ng-show="isLoggedIn()"
+     ng-click="postToggle = postToggle ? false : true">
+       <span class="postHeading">Add a new post</span>
+  </i>
 
-     <!-- Title -->
-     <div class="form-group">
-       <input type="text"
-       class="form-control"
-       placeholder="Title"
-       ng-model="title"></input>
-     </div>
+  <!-- Form to add new post -->
+  <div ng-show="isLoggedIn()">
+   <form ng-submit="addPost()"
+         style="margin:10px 0 0 5%;"
+         ng-show="postToggle"
+         id="newPost">
 
-     <!-- Body -->
-     <div class="form-group">
-       <textarea type="text"
-       class="form-control"
-       ng-model="body"
-       placeholder="Body"></textarea>
-     </div>
+       <!-- Title -->
+       <div class="form-group">
+         <input type="text"
+         class="form-control"
+         placeholder="Title"
+         ng-model="title"></input>
+       </div>
 
-     <!-- Submit Button -->
-     <button type="submit" class="btn btn-primary">Post</button>
-  </form>
+       <!-- Body -->
+       <div class="form-group">
+         <textarea type="text"
+         class="form-control"
+         ng-model="body"
+         placeholder="Body (Optional)"></textarea>
+       </div>
+
+       <!-- Submit Button -->
+       <button type="submit" class="btn btn-primary">Post</button>
+    </form>
+  </div>
 
   <!-- If not logged in, displays a message to log in or register -->
   <div ng-hide="isLoggedIn()">
-    <h4>
-      You need to <a href="/#/login">Log In</a> or <a href="/#/register">
-      Register</a> before you can add a post.
+    <h4>You need to <a href="/#/login">Log In</a> or <a href="/#/register">
+        Register</a> before you can add a post.
     </h4>
   </div>
+
 </script><!-- End of home page template -->
 
 <!-- Post page / comments template -->
@@ -218,44 +256,73 @@
      <span ng-show="post.body">
        <h3><i>{{post.body}}</i></h3>
      </span>
+
      <!-- Displays author of post -->
      <div ng-show="post.author">
-       <h6>posted by <span class="text-capitalize">{{post.author}}</span> at {{post.createdOn | date : 'h:mm a'}} on {{post.createdOn | date : 'M/d/yy'}}</h6>
+       <h6>posted by <span class="text-capitalize">{{post.author}}</span>
+           <!-- Displays time stamp -->
+           at {{post.createdOn | date : 'h:mm a'}} on {{post.createdOn | date : 'M/d/yy'}}
+       </h6>
      </div>
    </div>
 
    <!-- Loops through comments -->
    <div ng-repeat="comment in post.comments">
+
      <!--Voting system-->
      <div id="votingSystem" class="pull-left">
        <i ng-click="increaseCommentVotes(comment)" class="ion-arrow-up-b upvote"></i><br>
          <span class="voteAmount">{{comment.votes}}<br></span>
        <i ng-click="decreaseCommentVotes(comment)" class="ion-arrow-down-b downvote"></i>
      </div>
+
      <!-- Displays comment -->
      <div id="commentContainer">
      <h4><strong>{{comment.body}}</strong></h4>
-     <!-- Displays author -->
-     <h6><span ng-show="hideCommentDelete(auth, comment)" ng-click="removeComment(comment)">delete</span><span class="pull-right">
-       posted by <span class="text-capitalize">{{comment.author}}</span>
-       <span> at {{comment.createdOn | date : 'h:mm a'}} on {{comment.createdOn | date : 'M/d/yy'}}</span>
-     </span><br></h6></div>
-   </div>
 
-   <!-- Displays add comment box if logged in -->
-   <form ng-submit="addComment()"
-         style="margin-top:30px;"
-         ng-show="isLoggedIn()">
+     <!-- Displays delete button if user = auther (also toggles verification) -->
+     <h6><span ng-show="hideCommentDelete(auth, comment)" class="delete"
+               ng-click="deleteCheck = deleteCheck ? false : true">delete
+         </span>
 
-         <h3>Add a new comment</h3>
-         <div class="form-group">
-           <textarea class="form-control"
-                     placeholder="Comment"
-                     ng-model="body">
-           </textarea>
-         </div>
-       <button type="submit" class="btn btn-primary">Post</button>
-    </form>
+         <!-- Delete verification -->
+         <strong><span ng-show="deleteCheck" class="deleteCheck"
+                  ng-click="removeComment(comment)">DELETE PERMANENTLY
+         </span></strong>
+
+         <!-- Display author -->
+       <span class="pull-right">
+         posted by <span class="text-capitalize">{{comment.author}}</span>
+
+         <!-- Display timestamp -->
+         <span> at {{comment.createdOn | date : 'h:mm a'}} on {{comment.createdOn | date : 'M/d/yy'}}</span>
+       </span><br></h6></div><!-- close comment container div -->
+
+   </div> <!-- Close comment loop div -->
+
+   <!-- Toggles comment box (if logged in) -->
+    <div class="commentToggle">
+       <i class="ion-plus-circled" ng-show="isLoggedIn()"
+          ng-click="commentToggle = commentToggle ? false : true">
+            <span class="commentHeading">Add a new comment</span></i>
+    </div>
+
+       <!-- Displays add comment box if logged in -->
+       <div ng-show="isLoggedIn()">
+       <form ng-submit="addComment()"
+             style="margin:10px 0 0 2%;"
+             ng-show="commentToggle"
+             id="newComment">
+
+             <div class="form-group">
+               <textarea class="form-control"
+                         placeholder="Comment"
+                         ng-model="body">
+               </textarea>
+             </div>
+           <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+      </div>
 
    <!-- Displays message to log in or register to add comment -->
    <div ng-hide="isLoggedIn()">
