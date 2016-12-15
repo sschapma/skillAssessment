@@ -1,6 +1,6 @@
 #Sam's Forum
 
-![](http://sschapman.com/imgs/gifs/reddit-clone.gif)
+![](http://sschapman.com/img/gifs/reddit-clone.gif)
 
 ###A full stack forum app using the MEAN stack.
 ###(MongoDB, ExpressJS, AngularJS and NodeJS)
